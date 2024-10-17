@@ -10,10 +10,16 @@ type Props = {
 
 export const Error: React.FC<Props> = ({ errorMessage, setErrorMessage }) => {
   useEffect(() => {
+    let timer: NodeJS.Timeout;
+
     if (errorMessage) {
-      setTimeout(() => setErrorMessage(TypeError.DEFAULT), 3000);
+      timer = setTimeout(() => setErrorMessage(TypeError.DEFAULT), 3000);
     }
-  }, [errorMessage]);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [setErrorMessage, errorMessage]);
 
   return (
     <div

@@ -5,22 +5,14 @@ export const getFilteredTodos = (
   todos: Todo[],
   selectedOption: SelectedType,
 ) => {
-  let filteredTodos = [...todos];
+  switch (selectedOption) {
+    case SelectedType.ACTIVE:
+      return todos.filter(todo => !todo.completed);
 
-  if (selectedOption !== SelectedType.ALL) {
-    filteredTodos = filteredTodos.filter(todo => {
-      switch (selectedOption) {
-        case SelectedType.ACTIVE:
-          return todo.completed === false;
+    case SelectedType.COMPLETED:
+      return todos.filter(todo => todo.completed);
 
-        case SelectedType.COMPLETED:
-          return todo.completed === true;
-
-        default:
-          return;
-      }
-    });
+    default:
+      return todos;
   }
-
-  return filteredTodos;
 };
