@@ -8,6 +8,7 @@ import { Footer } from './components/Footer';
 import { Error } from './components/Error';
 import { TypeError } from './types/TypeError';
 import { SelectedType } from './types/SelectedType';
+import { Header } from './components/Header';
 
 export const App: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -18,35 +19,20 @@ export const App: React.FC = () => {
     SelectedType.ALL,
   );
 
+  const filteredTodos = getFilteredTodos(todos, selectedOption);
+
   useEffect(() => {
     getTodos()
       .then(setTodos)
       .catch(() => setErrorMessage(TypeError.LOADING));
   }, []);
 
-  const filteredTodos = getFilteredTodos(todos, selectedOption);
-
   return (
     <div className="todoapp">
       <h1 className="todoapp__title">todos</h1>
 
       <div className="todoapp__content">
-        <header className="todoapp__header">
-          <button
-            type="button"
-            className="todoapp__toggle-all active"
-            data-cy="ToggleAllButton"
-          />
-
-          <form>
-            <input
-              data-cy="NewTodoField"
-              type="text"
-              className="todoapp__new-todo"
-              placeholder="What needs to be done?"
-            />
-          </form>
-        </header>
+        <Header />
 
         {todos.length > 0 && (
           <>
